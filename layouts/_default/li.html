@@ -3,3 +3,8 @@
     <div class="image" style="background-image: url({{ $.Site.BaseURL }}images/{{ with .Params.image }}{{ . }}{{ else }}default.jpg{{ end }});"></div>
   </a>
 </article>
+
+<li>
+<a href="{{ .Permalink }}">{{ .Title }}</a>
+<div class="meta">{{ .Date.Format "Mon, Jan 2, 2006" }}</div>
+</li>

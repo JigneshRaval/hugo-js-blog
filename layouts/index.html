@@ -2,11 +2,7 @@
 <html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 
 <head>
-  <meta charset="utf-8">
-
-  <base href="{{ .Site.BaseURL }}">
-  <title>{{ .Site.Title }}</title>
-
+  {{ partial "header.html" . }}
 </head>
 
 <body lang="en">
@@ -17,6 +13,24 @@
       <p> {{ .Description }} </p>
       {{ end }}
     </div>
+
+    <!-- START :: summary View -->
+    {{ range .Data.Pages }} {{ .Render "summary"}} {{ end }} 
+    <!-- END :: summary View -->
+
+    <br/>
+    <br/>
+    
+    <!-- START :: List View -->
+    {{ range .Data.Pages }} {{ .Render "li"}} {{ end }}
+    <!-- END :: List View -->
+
+    {{ range .Data.Pages.ByWeight }}
+<li>
+<a href="{{ .Permalink }}">{{ .Title }}</a>
+<div class="meta">{{ .Date.Format "Mon, Jan 2, 2006" }}</div>
+</li>
+{{ end }}
   </section>
 </body>
 
