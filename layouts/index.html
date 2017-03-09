@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+
+<head>
+  <meta charset="utf-8">
+
+  <base href="{{ .Site.BaseURL }}">
+  <title>{{ .Site.Title }}</title>
+
+</head>
+
+<body lang="en">
+  <section id="main">
+    <div>
+      {{ range first 10 .Data.Pages }}
+      <h1>{{ .Title }}</h1>
+      <p> {{ .Description }} </p>
+      {{ end }}
+    </div>
+  </section>
+</body>
+
+</html>

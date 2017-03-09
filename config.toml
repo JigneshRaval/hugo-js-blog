@@ -1,0 +1,23 @@
+languageCode = "en-us"
+title = "My New Hugo Site"
+baseURL = "http://localhost:1313"
+contentDir = "content"
+layoutDir = "layouts"
+buildDrafts = false
+
+[[menu.main]]
+  parent= 'extras'
+  name = "My Blog"
+  weight = -120
+  identifier = "post"
+  url = "/post"
+
+[[menu.main]]
+  name = "About me"
+  weight = -110
+  identifier = "about"
+  url = "/about"
+
+[[taxonomies]]
+  category = "categories"
+  tag = "tags"
