@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on My New Hugo Site</title>
+    <link>http://localhost:1313/post/index.xml</link>
+    <description>Recent content in Posts on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Jun 2014 11:27:27 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Second Post</title>
+      <link>http://localhost:1313/post/nitro/</link>
+      <pubDate>Sat, 21 Jun 2014 11:27:27 -0400</pubDate>
+      
+      <guid>http://localhost:1313/post/nitro/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://www.flickr.com/photos/fleur-design/308974073/&#34;&gt;&lt;img src=&#34;http://farm1.static.flickr.com/104/308974073_9057064747_m.jpg&#34; alt=&#34;&#34; title=&#34;speed machine&#34; /&gt;&lt;/a&gt; Nearly every website on the internet uses javascript in some form or fashion. Yet very few people, even those who write it and teach it, have a clear understanding of how javascript works!&lt;/p&gt;
+
+&lt;p&gt;Logical Operators are a core part of the language. We’re going to look at what logical operators are, what “truthy” and “falsy” mean, and &lt;strong&gt;how to use this to write cleaner, faster and more optimized javascript&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;javascript-logical-operators&#34;&gt;Javascript Logical Operators&lt;/h2&gt;
+
+&lt;p&gt;In traditional programming, operators such as &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; and &lt;code&gt;||&lt;/code&gt; returned a boolean value (&lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;). This is not the case in javascript. Here it returns the actual &lt;code&gt;object&lt;/code&gt;, not a &lt;code&gt;true&lt;/code&gt; / &lt;code&gt;false&lt;/code&gt;. To really explain this, I first have to explain what is truthy and what is falsy.&lt;/p&gt;
+
+&lt;h3 id=&#34;truthy-or-falsy&#34;&gt;Truthy or Falsy&lt;/h3&gt;
+
+&lt;p&gt;When javascript is expecting a &lt;code&gt;boolean&lt;/code&gt; and it’s given something else, it decides whether the something else is “truthy” or “falsy”.&lt;/p&gt;
+
+&lt;p&gt;An empty string (&lt;code&gt;&#39;&#39;&lt;/code&gt;), the number &lt;code&gt;0&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt;, &lt;code&gt;NaN&lt;/code&gt;, a boolean &lt;code&gt;false&lt;/code&gt;, and &lt;code&gt;undefined&lt;/code&gt; variables are all “falsy”. Everything else is “truthy”.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var emptyString = &amp;quot;&amp;quot;; // falsy
+
+var nonEmptyString = &amp;quot;this is text&amp;quot;; // truthy
+
+var numberZero = 0; // falsy
+
+var numberOne = 1; // truthy
+
+var emptyArray = []; // truthy, BUT []==false is true. More below.
+
+var emptyObject = {}; // truthy
+
+// NaN is a special javascript object for &amp;quot;Not a Number&amp;quot;.
+var notANumber = 5 / &amp;quot;tree&amp;quot;; // falsy
+
+function exampleFunction(){
+    alert(&amp;quot;Test&amp;quot;);
+}
+
+// examleFunction is truthy
+// BUT exampleFunction() is falsy because it has no return (undefined)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Gotchas to watch out for: the strings &lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt; and &lt;code&gt;&amp;quot;false&amp;quot;&lt;/code&gt; are both considered truthy. You can convert a string to a number with the &lt;code&gt;parseInt()&lt;/code&gt; and &lt;code&gt;parseFloat()&lt;/code&gt; functions, or by just multiplying it by &lt;code&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var test = &amp;quot;0&amp;quot;; // this is a string, not a number
+
+var a = (test == false); // a is false, meaning that test is truthy
+
+var b = (test * 1 == false); // b is true, meaning that `test * 1` is falsy
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Array&lt;/code&gt;s are particularly weird. If you just test it for truthyness, an empty array is truthy. HOWEVER, if you compare an empty array to a boolean, it becomes falsy:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if ( [] == false ) {
+    // this code runs
+}
+
+if ( [] ) {
+    // this code also runs
+}
+
+if ([] == true) {
+    // this code doesn&#39;t run
+}
+
+if ( ![] ) {
+    // this code also doesn&#39;t run
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(This is because when you do a comparison, it&amp;rsquo;s elements are turned to &lt;code&gt;String&lt;/code&gt;s and joined. Since it&amp;rsquo;s empty, it becomes &lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt; which is then falsy. Yea, &lt;a href=&#34;https://www.destroyallsoftware.com/talks/wat&#34;&gt;it&amp;rsquo;s weird&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;If you write any PHP, then there&amp;rsquo;s an additional gotcha to watch out for: while javascript evaluates empty arrays as true, PHP evaluates them as false.&lt;/p&gt;
+
+&lt;p&gt;PHP also evaluates “0″ as falsy. (However the string “false” is evaluated as truthy by both PHP and javascript.)&lt;/p&gt;
+
+&lt;h3 id=&#34;how-logical-operators-work&#34;&gt;How Logical Operators Work&lt;/h3&gt;
+
+&lt;h4 id=&#34;logical-or&#34;&gt;Logical OR, &lt;code&gt;||&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The logical OR operator, &lt;code&gt;||&lt;/code&gt;, is very simple after you understand what it is doing. If the first object is truthy, that gets returned. Otherwise, the second object gets returned.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (&amp;quot;test one&amp;quot; || &amp;quot;test two&amp;quot;); // a is &amp;quot;test one&amp;quot;
+
+var b = (&amp;quot;test one&amp;quot; || &amp;quot;&amp;quot;); // b is &amp;quot;test one&amp;quot;
+
+var c = (0 || &amp;quot;test two&amp;quot;); // c is &amp;quot;Test two&amp;quot;
+
+var d = (0 || false); // d is false
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where would you ever use this? The OR operator allows you to easily specify default variables in a function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function sayHi(name){
+    name = name || &amp;quot;Dave&amp;quot;;
+    alert(&amp;quot;Hi &amp;quot; + name);
+}
+
+sayHi(&amp;quot;Nathan&amp;quot;); // alerts &amp;quot;Hi Nathan&amp;quot;;
+
+sayHi(); // alerts &amp;quot;Hi Dave&amp;quot;, name is set to null when the function is started
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;logical-and&#34;&gt;Logical AND, &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The logical AND operator, &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;, works similarly. If the first object is falsy, it returns that object. If it is truthy, it returns the second object.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (&amp;quot;test one&amp;quot; &amp;amp;&amp;amp; &amp;quot;test two&amp;quot;); // a is &amp;quot;test two&amp;quot;
+
+var b = (&amp;quot;test one&amp;quot; &amp;amp;&amp;amp; &amp;quot;&amp;quot;); // b is &amp;quot;&amp;quot;
+
+var c = (0 &amp;amp;&amp;amp; &amp;quot;test two&amp;quot;) // c is 0
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The logical AND allows you to make one variable dependent on another.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var checkbox = document.getElementById(&amp;quot;agreeToTerms&amp;quot;);
+
+var name = checkbox.checked &amp;amp;&amp;amp; prompt(&amp;quot;What is your name&amp;quot;);
+
+// name is either their name, or false if they haven&#39;t checked the AgreeToTerms checkbox
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;logical-not&#34;&gt;Logical NOT, &lt;code&gt;!&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;Unlike &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; and &lt;code&gt;||&lt;/code&gt;, the &lt;code&gt;!&lt;/code&gt; operator DOES turn the value it receives into a boolean. If it receives a truthy value, it returns &lt;code&gt;false&lt;/code&gt;, and if it receives a falsy value, it returns &lt;code&gt;true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (!&amp;quot;test one&amp;quot; || &amp;quot;test two&amp;quot;); // a is &amp;quot;test two&amp;quot;
+// (&amp;quot;test one&amp;quot; gets converted to false and skipped)
+
+var b = (!&amp;quot;test one&amp;quot; &amp;amp;&amp;amp; &amp;quot;test two&amp;quot;); // b is false
+// (&amp;quot;test one&amp;quot; gets converted to false and returned)
+
+var c = (!0 || !&amp;quot;test two&amp;quot;); // c is true
+// (0 gets converted to true and returned)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Another useful way to use the &lt;code&gt;!&lt;/code&gt; operator is to use two of them – this way you always get a &lt;code&gt;true&lt;/code&gt; or a &lt;code&gt;false&lt;/code&gt; no matter what was given to it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (!!&amp;quot;test&amp;quot;); // a is true
+//  &amp;quot;test&amp;quot; is converted to false, then that is converted to true
+
+var b = (!!&amp;quot;&amp;quot;); // b is false
+// &amp;quot;&amp;quot; is converted to true, and then that true is converted to false
+
+var c = (!!variableThatDoesntExist); // c is false even though you&#39;re checking an undefined variable.
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;javascript-optimization-http-nfriedly-com-portfolio&#34;&gt;&lt;a href=&#34;http://nfriedly.com/portfolio&#34;&gt;Javascript Optimization&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Need any help &lt;a href=&#34;http://nfriedly.com/portfolio#javascript&#34;&gt;optimizing the Javascript and AJAX on your website&lt;/a&gt;? Get in touch with your friendly neighborhood &lt;a href=&#34;http://nfriedly.com/portfolio&#34;&gt;javascript expert&lt;/a&gt; for ideas on how to optimize your site and a free quote.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nitro: A quick and simple profiler for Go</title>
+      <link>http://localhost:1313/post/first/</link>
+      <pubDate>Fri, 21 Jun 2013 11:27:27 -0400</pubDate>
+      
+      <guid>http://localhost:1313/post/first/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://www.flickr.com/photos/fleur-design/308974073/&#34;&gt;&lt;img src=&#34;http://farm1.static.flickr.com/104/308974073_9057064747_m.jpg&#34; alt=&#34;&#34; title=&#34;speed machine&#34; /&gt;&lt;/a&gt; Nearly every website on the internet uses javascript in some form or fashion. Yet very few people, even those who write it and teach it, have a clear understanding of how javascript works!&lt;/p&gt;
+
+&lt;p&gt;Logical Operators are a core part of the language. We’re going to look at what logical operators are, what “truthy” and “falsy” mean, and &lt;strong&gt;how to use this to write cleaner, faster and more optimized javascript&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;javascript-logical-operators&#34;&gt;Javascript Logical Operators&lt;/h2&gt;
+
+&lt;p&gt;In traditional programming, operators such as &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; and &lt;code&gt;||&lt;/code&gt; returned a boolean value (&lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;). This is not the case in javascript. Here it returns the actual &lt;code&gt;object&lt;/code&gt;, not a &lt;code&gt;true&lt;/code&gt; / &lt;code&gt;false&lt;/code&gt;. To really explain this, I first have to explain what is truthy and what is falsy.&lt;/p&gt;
+
+&lt;h3 id=&#34;truthy-or-falsy&#34;&gt;Truthy or Falsy&lt;/h3&gt;
+
+&lt;p&gt;When javascript is expecting a &lt;code&gt;boolean&lt;/code&gt; and it’s given something else, it decides whether the something else is “truthy” or “falsy”.&lt;/p&gt;
+
+&lt;p&gt;An empty string (&lt;code&gt;&#39;&#39;&lt;/code&gt;), the number &lt;code&gt;0&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt;, &lt;code&gt;NaN&lt;/code&gt;, a boolean &lt;code&gt;false&lt;/code&gt;, and &lt;code&gt;undefined&lt;/code&gt; variables are all “falsy”. Everything else is “truthy”.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var emptyString = &amp;quot;&amp;quot;; // falsy
+
+var nonEmptyString = &amp;quot;this is text&amp;quot;; // truthy
+
+var numberZero = 0; // falsy
+
+var numberOne = 1; // truthy
+
+var emptyArray = []; // truthy, BUT []==false is true. More below.
+
+var emptyObject = {}; // truthy
+
+// NaN is a special javascript object for &amp;quot;Not a Number&amp;quot;.
+var notANumber = 5 / &amp;quot;tree&amp;quot;; // falsy
+
+function exampleFunction(){
+    alert(&amp;quot;Test&amp;quot;);
+}
+
+// examleFunction is truthy
+// BUT exampleFunction() is falsy because it has no return (undefined)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Gotchas to watch out for: the strings &lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt; and &lt;code&gt;&amp;quot;false&amp;quot;&lt;/code&gt; are both considered truthy. You can convert a string to a number with the &lt;code&gt;parseInt()&lt;/code&gt; and &lt;code&gt;parseFloat()&lt;/code&gt; functions, or by just multiplying it by &lt;code&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var test = &amp;quot;0&amp;quot;; // this is a string, not a number
+
+var a = (test == false); // a is false, meaning that test is truthy
+
+var b = (test * 1 == false); // b is true, meaning that `test * 1` is falsy
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Array&lt;/code&gt;s are particularly weird. If you just test it for truthyness, an empty array is truthy. HOWEVER, if you compare an empty array to a boolean, it becomes falsy:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if ( [] == false ) {
+    // this code runs
+}
+
+if ( [] ) {
+    // this code also runs
+}
+
+if ([] == true) {
+    // this code doesn&#39;t run
+}
+
+if ( ![] ) {
+    // this code also doesn&#39;t run
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(This is because when you do a comparison, it&amp;rsquo;s elements are turned to &lt;code&gt;String&lt;/code&gt;s and joined. Since it&amp;rsquo;s empty, it becomes &lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt; which is then falsy. Yea, &lt;a href=&#34;https://www.destroyallsoftware.com/talks/wat&#34;&gt;it&amp;rsquo;s weird&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;If you write any PHP, then there&amp;rsquo;s an additional gotcha to watch out for: while javascript evaluates empty arrays as true, PHP evaluates them as false.&lt;/p&gt;
+
+&lt;p&gt;PHP also evaluates “0″ as falsy. (However the string “false” is evaluated as truthy by both PHP and javascript.)&lt;/p&gt;
+
+&lt;h3 id=&#34;how-logical-operators-work&#34;&gt;How Logical Operators Work&lt;/h3&gt;
+
+&lt;h4 id=&#34;logical-or&#34;&gt;Logical OR, &lt;code&gt;||&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The logical OR operator, &lt;code&gt;||&lt;/code&gt;, is very simple after you understand what it is doing. If the first object is truthy, that gets returned. Otherwise, the second object gets returned.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (&amp;quot;test one&amp;quot; || &amp;quot;test two&amp;quot;); // a is &amp;quot;test one&amp;quot;
+
+var b = (&amp;quot;test one&amp;quot; || &amp;quot;&amp;quot;); // b is &amp;quot;test one&amp;quot;
+
+var c = (0 || &amp;quot;test two&amp;quot;); // c is &amp;quot;Test two&amp;quot;
+
+var d = (0 || false); // d is false
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where would you ever use this? The OR operator allows you to easily specify default variables in a function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function sayHi(name){
+    name = name || &amp;quot;Dave&amp;quot;;
+    alert(&amp;quot;Hi &amp;quot; + name);
+}
+
+sayHi(&amp;quot;Nathan&amp;quot;); // alerts &amp;quot;Hi Nathan&amp;quot;;
+
+sayHi(); // alerts &amp;quot;Hi Dave&amp;quot;, name is set to null when the function is started
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;logical-and&#34;&gt;Logical AND, &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;The logical AND operator, &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;, works similarly. If the first object is falsy, it returns that object. If it is truthy, it returns the second object.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (&amp;quot;test one&amp;quot; &amp;amp;&amp;amp; &amp;quot;test two&amp;quot;); // a is &amp;quot;test two&amp;quot;
+
+var b = (&amp;quot;test one&amp;quot; &amp;amp;&amp;amp; &amp;quot;&amp;quot;); // b is &amp;quot;&amp;quot;
+
+var c = (0 &amp;amp;&amp;amp; &amp;quot;test two&amp;quot;) // c is 0
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The logical AND allows you to make one variable dependent on another.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var checkbox = document.getElementById(&amp;quot;agreeToTerms&amp;quot;);
+
+var name = checkbox.checked &amp;amp;&amp;amp; prompt(&amp;quot;What is your name&amp;quot;);
+
+// name is either their name, or false if they haven&#39;t checked the AgreeToTerms checkbox
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;logical-not&#34;&gt;Logical NOT, &lt;code&gt;!&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;Unlike &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt; and &lt;code&gt;||&lt;/code&gt;, the &lt;code&gt;!&lt;/code&gt; operator DOES turn the value it receives into a boolean. If it receives a truthy value, it returns &lt;code&gt;false&lt;/code&gt;, and if it receives a falsy value, it returns &lt;code&gt;true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (!&amp;quot;test one&amp;quot; || &amp;quot;test two&amp;quot;); // a is &amp;quot;test two&amp;quot;
+// (&amp;quot;test one&amp;quot; gets converted to false and skipped)
+
+var b = (!&amp;quot;test one&amp;quot; &amp;amp;&amp;amp; &amp;quot;test two&amp;quot;); // b is false
+// (&amp;quot;test one&amp;quot; gets converted to false and returned)
+
+var c = (!0 || !&amp;quot;test two&amp;quot;); // c is true
+// (0 gets converted to true and returned)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Another useful way to use the &lt;code&gt;!&lt;/code&gt; operator is to use two of them – this way you always get a &lt;code&gt;true&lt;/code&gt; or a &lt;code&gt;false&lt;/code&gt; no matter what was given to it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = (!!&amp;quot;test&amp;quot;); // a is true
+//  &amp;quot;test&amp;quot; is converted to false, then that is converted to true
+
+var b = (!!&amp;quot;&amp;quot;); // b is false
+// &amp;quot;&amp;quot; is converted to true, and then that true is converted to false
+
+var c = (!!variableThatDoesntExist); // c is false even though you&#39;re checking an undefined variable.
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;javascript-optimization-http-nfriedly-com-portfolio&#34;&gt;&lt;a href=&#34;http://nfriedly.com/portfolio&#34;&gt;Javascript Optimization&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Need any help &lt;a href=&#34;http://nfriedly.com/portfolio#javascript&#34;&gt;optimizing the Javascript and AJAX on your website&lt;/a&gt;? Get in touch with your friendly neighborhood &lt;a href=&#34;http://nfriedly.com/portfolio&#34;&gt;javascript expert&lt;/a&gt; for ideas on how to optimize your site and a free quote.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
